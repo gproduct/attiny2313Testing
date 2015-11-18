@@ -6,7 +6,7 @@
  */ 
 /*
 * Objectives
-* Set F_CPU :)
+* idk
 * 
 */
 //unsigned long long
@@ -16,12 +16,9 @@
 #include <util/delay.h>
 int main(void)
 {
-	DDRB = 0x01;
+	//in branch led we have some basic led code
     while(1)
     {
-        PORTB = 0x01;
-		_delay_ms(1000);
-		PORTB = 0x00;
-		_delay_ms(1000);
+        
     }
 }

@@ -3,23 +3,23 @@ firstTest.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000066  00000000  00000000  00000054  2**1
+  0 .text         0000003a  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .comment      00000030  00000000  00000000  000000ba  2**0
+  1 .comment      00000030  00000000  00000000  0000008e  2**0
                   CONTENTS, READONLY
-  2 .debug_aranges 00000020  00000000  00000000  000000ea  2**0
+  2 .debug_aranges 00000020  00000000  00000000  000000be  2**0
                   CONTENTS, READONLY, DEBUGGING
-  3 .debug_info   00000145  00000000  00000000  0000010a  2**0
+  3 .debug_info   0000007c  00000000  00000000  000000de  2**0
                   CONTENTS, READONLY, DEBUGGING
-  4 .debug_abbrev 000000d3  00000000  00000000  0000024f  2**0
+  4 .debug_abbrev 00000046  00000000  00000000  0000015a  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_line   00000147  00000000  00000000  00000322  2**0
+  5 .debug_line   0000003d  00000000  00000000  000001a0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_frame  00000024  00000000  00000000  0000046c  2**2
+  6 .debug_frame  00000024  00000000  00000000  000001e0  2**2
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_str    0000017f  00000000  00000000  00000490  2**0
+  7 .debug_str    0000012c  00000000  00000000  00000204  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_ranges 00000010  00000000  00000000  0000060f  2**0
+  8 .debug_ranges 00000010  00000000  00000000  00000330  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -51,55 +51,22 @@ Disassembly of section .text:
   2a:	cf ed       	ldi	r28, 0xDF	; 223
   2c:	cd bf       	out	0x3d, r28	; 61
   2e:	02 d0       	rcall	.+4      	; 0x34 <main>
-  30:	18 c0       	rjmp	.+48     	; 0x62 <_exit>
+  30:	02 c0       	rjmp	.+4      	; 0x36 <_exit>
 
 00000032 <__bad_interrupt>:
   32:	e6 cf       	rjmp	.-52     	; 0x0 <__vectors>
 
 00000034 <main>:
+#define F_CPU	11059200ULL
 
 #include <avr/io.h>
 #include <util/delay.h>
 int main(void)
 {
-	DDRB = 0x01;
-  34:	81 e0       	ldi	r24, 0x01	; 1
-  36:	87 bb       	out	0x17, r24	; 23
-    while(1)
-    {
-        PORTB = 0x01;
-  38:	88 bb       	out	0x18, r24	; 24
-	#else
-		//round up by default
-		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
-	#endif
+  34:	ff cf       	rjmp	.-2      	; 0x34 <main>
 
-	__builtin_avr_delay_cycles(__ticks_dc);
-  3a:	2f ef       	ldi	r18, 0xFF	; 255
-  3c:	3f eb       	ldi	r19, 0xBF	; 191
-  3e:	91 e2       	ldi	r25, 0x21	; 33
-  40:	21 50       	subi	r18, 0x01	; 1
-  42:	30 40       	sbci	r19, 0x00	; 0
-  44:	90 40       	sbci	r25, 0x00	; 0
-  46:	e1 f7       	brne	.-8      	; 0x40 <__SREG__+0x1>
-  48:	00 c0       	rjmp	.+0      	; 0x4a <__SREG__+0xb>
-  4a:	00 00       	nop
-		_delay_ms(1000);
-		PORTB = 0x00;
-  4c:	18 ba       	out	0x18, r1	; 24
-  4e:	2f ef       	ldi	r18, 0xFF	; 255
-  50:	3f eb       	ldi	r19, 0xBF	; 191
-  52:	91 e2       	ldi	r25, 0x21	; 33
-  54:	21 50       	subi	r18, 0x01	; 1
-  56:	30 40       	sbci	r19, 0x00	; 0
-  58:	90 40       	sbci	r25, 0x00	; 0
-  5a:	e1 f7       	brne	.-8      	; 0x54 <__SREG__+0x15>
-  5c:	00 c0       	rjmp	.+0      	; 0x5e <__SREG__+0x1f>
-  5e:	00 00       	nop
-  60:	eb cf       	rjmp	.-42     	; 0x38 <main+0x4>
+00000036 <_exit>:
+  36:	f8 94       	cli
 
-00000062 <_exit>:
-  62:	f8 94       	cli
-
-00000064 <__stop_program>:
-  64:	ff cf       	rjmp	.-2      	; 0x64 <__stop_program>
+00000038 <__stop_program>:
+  38:	ff cf       	rjmp	.-2      	; 0x38 <__stop_program>
