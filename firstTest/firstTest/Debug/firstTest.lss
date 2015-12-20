@@ -3,23 +3,25 @@ firstTest.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         0000003a  00000000  00000000  00000054  2**1
+  0 .text         000000e8  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .comment      00000030  00000000  00000000  0000008e  2**0
+  1 .comment      00000030  00000000  00000000  0000013c  2**0
                   CONTENTS, READONLY
-  2 .debug_aranges 00000020  00000000  00000000  000000be  2**0
+  2 .debug_aranges 00000028  00000000  00000000  0000016c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  3 .debug_info   0000007c  00000000  00000000  000000de  2**0
+  3 .debug_info   000001ee  00000000  00000000  00000194  2**0
                   CONTENTS, READONLY, DEBUGGING
-  4 .debug_abbrev 00000046  00000000  00000000  0000015a  2**0
+  4 .debug_abbrev 0000010b  00000000  00000000  00000382  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_line   0000003d  00000000  00000000  000001a0  2**0
+  5 .debug_line   0000017f  00000000  00000000  0000048d  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_frame  00000024  00000000  00000000  000001e0  2**2
+  6 .debug_frame  0000005c  00000000  00000000  0000060c  2**2
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_str    0000012c  00000000  00000000  00000204  2**0
+  7 .debug_str    0000018f  00000000  00000000  00000668  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_ranges 00000010  00000000  00000000  00000330  2**0
+  8 .debug_loc    000000dd  00000000  00000000  000007f7  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_ranges 00000018  00000000  00000000  000008d4  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -27,7 +29,7 @@ Disassembly of section .text:
 00000000 <__vectors>:
    0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
    2:	17 c0       	rjmp	.+46     	; 0x32 <__bad_interrupt>
-   4:	16 c0       	rjmp	.+44     	; 0x32 <__bad_interrupt>
+   4:	17 c0       	rjmp	.+46     	; 0x34 <__vector_2>
    6:	15 c0       	rjmp	.+42     	; 0x32 <__bad_interrupt>
    8:	14 c0       	rjmp	.+40     	; 0x32 <__bad_interrupt>
    a:	13 c0       	rjmp	.+38     	; 0x32 <__bad_interrupt>
@@ -50,23 +52,176 @@ Disassembly of section .text:
   28:	1f be       	out	0x3f, r1	; 63
   2a:	cf ed       	ldi	r28, 0xDF	; 223
   2c:	cd bf       	out	0x3d, r28	; 61
-  2e:	02 d0       	rcall	.+4      	; 0x34 <main>
-  30:	02 c0       	rjmp	.+4      	; 0x36 <_exit>
+  2e:	3b d0       	rcall	.+118    	; 0xa6 <main>
+  30:	59 c0       	rjmp	.+178    	; 0xe4 <_exit>
 
 00000032 <__bad_interrupt>:
   32:	e6 cf       	rjmp	.-52     	; 0x0 <__vectors>
 
-00000034 <main>:
-#define F_CPU	11059200ULL
+00000034 <__vector_2>:
 
-#include <avr/io.h>
-#include <util/delay.h>
+#define DataPort PORTB
+#define DataDDR DDRB
+
+ISR(INT1_vect)								//run this if we have an external interrupt from PORTD PIN 4 (pushButton)
+{
+  34:	1f 92       	push	r1
+  36:	0f 92       	push	r0
+  38:	0f b6       	in	r0, 0x3f	; 63
+  3a:	0f 92       	push	r0
+  3c:	11 24       	eor	r1, r1
+  3e:	2f 93       	push	r18
+  40:	3f 93       	push	r19
+  42:	4f 93       	push	r20
+  44:	5f 93       	push	r21
+  46:	8f 93       	push	r24
+  48:	9f 93       	push	r25
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  4a:	2f ef       	ldi	r18, 0xFF	; 255
+  4c:	3f e5       	ldi	r19, 0x5F	; 95
+  4e:	43 e0       	ldi	r20, 0x03	; 3
+  50:	21 50       	subi	r18, 0x01	; 1
+  52:	30 40       	sbci	r19, 0x00	; 0
+  54:	40 40       	sbci	r20, 0x00	; 0
+  56:	e1 f7       	brne	.-8      	; 0x50 <__SREG__+0x11>
+  58:	00 c0       	rjmp	.+0      	; 0x5a <__SREG__+0x1b>
+  5a:	00 00       	nop
+	unsigned char i,temp;
+	
+	_delay_ms(100);
+	temp = DataPort;
+  5c:	28 b3       	in	r18, 0x18	; 24
+  5e:	85 e0       	ldi	r24, 0x05	; 5
+	
+	for(i = 0; i < 5; i++)
+	{
+		DataPort = 0x00;
+		_delay_ms(500);
+		DataPort = 0xff;
+  60:	9f ef       	ldi	r25, 0xFF	; 255
+	_delay_ms(100);
+	temp = DataPort;
+	
+	for(i = 0; i < 5; i++)
+	{
+		DataPort = 0x00;
+  62:	18 ba       	out	0x18, r1	; 24
+  64:	5f ef       	ldi	r21, 0xFF	; 255
+  66:	3f ed       	ldi	r19, 0xDF	; 223
+  68:	40 e1       	ldi	r20, 0x10	; 16
+  6a:	51 50       	subi	r21, 0x01	; 1
+  6c:	30 40       	sbci	r19, 0x00	; 0
+  6e:	40 40       	sbci	r20, 0x00	; 0
+  70:	e1 f7       	brne	.-8      	; 0x6a <__SREG__+0x2b>
+  72:	00 c0       	rjmp	.+0      	; 0x74 <__SREG__+0x35>
+  74:	00 00       	nop
+		_delay_ms(500);
+		DataPort = 0xff;
+  76:	98 bb       	out	0x18, r25	; 24
+  78:	5f ef       	ldi	r21, 0xFF	; 255
+  7a:	3f ed       	ldi	r19, 0xDF	; 223
+  7c:	40 e1       	ldi	r20, 0x10	; 16
+  7e:	51 50       	subi	r21, 0x01	; 1
+  80:	30 40       	sbci	r19, 0x00	; 0
+  82:	40 40       	sbci	r20, 0x00	; 0
+  84:	e1 f7       	brne	.-8      	; 0x7e <__SREG__+0x3f>
+  86:	00 c0       	rjmp	.+0      	; 0x88 <__SREG__+0x49>
+  88:	00 00       	nop
+  8a:	81 50       	subi	r24, 0x01	; 1
+	unsigned char i,temp;
+	
+	_delay_ms(100);
+	temp = DataPort;
+	
+	for(i = 0; i < 5; i++)
+  8c:	51 f7       	brne	.-44     	; 0x62 <__SREG__+0x23>
+		DataPort = 0x00;
+		_delay_ms(500);
+		DataPort = 0xff;
+		_delay_ms(500);
+	}
+	DataPort = temp;
+  8e:	28 bb       	out	0x18, r18	; 24
+}
+  90:	9f 91       	pop	r25
+  92:	8f 91       	pop	r24
+  94:	5f 91       	pop	r21
+  96:	4f 91       	pop	r20
+  98:	3f 91       	pop	r19
+  9a:	2f 91       	pop	r18
+  9c:	0f 90       	pop	r0
+  9e:	0f be       	out	0x3f, r0	; 63
+  a0:	0f 90       	pop	r0
+  a2:	1f 90       	pop	r1
+  a4:	18 95       	reti
+
+000000a6 <main>:
 int main(void)
 {
-  34:	ff cf       	rjmp	.-2      	; 0x34 <main>
+	DDRD = 1 << PD4;						//setting the PORTD PIN 4 as input for push button
+  a6:	80 e1       	ldi	r24, 0x10	; 16
+  a8:	81 bb       	out	0x11, r24	; 17
+	PORTD = 1 << PD4;						//pull up for the pin
+  aa:	82 bb       	out	0x12, r24	; 18
+	
+	DataDDR = 0xff;							//portb as output for the leds
+  ac:	8f ef       	ldi	r24, 0xFF	; 255
+  ae:	87 bb       	out	0x17, r24	; 23
+	DataPort = 0x01;						//init for just one led
+  b0:	81 e0       	ldi	r24, 0x01	; 1
+  b2:	88 bb       	out	0x18, r24	; 24
+	
+	GIMSK= 1 << INT1;						//turning on the interupt (GIMSK register)
+  b4:	80 e8       	ldi	r24, 0x80	; 128
+  b6:	8b bf       	out	0x3b, r24	; 59
+	MCUCR = 1 << ISC01 | 1 << ISC00;		//rising edge
+  b8:	83 e0       	ldi	r24, 0x03	; 3
+  ba:	85 bf       	out	0x35, r24	; 53
+	
+	sei();
+  bc:	78 94       	sei
+	
+    while(1)
+    {
+        if(DataPort == 0x08){//07
+			DataPort = 1;
+  be:	91 e0       	ldi	r25, 0x01	; 1
+	
+	sei();
+	
+    while(1)
+    {
+        if(DataPort == 0x08){//07
+  c0:	88 b3       	in	r24, 0x18	; 24
+  c2:	88 30       	cpi	r24, 0x08	; 8
+  c4:	11 f4       	brne	.+4      	; 0xca <main+0x24>
+			DataPort = 1;
+  c6:	98 bb       	out	0x18, r25	; 24
+  c8:	03 c0       	rjmp	.+6      	; 0xd0 <main+0x2a>
+		}
+		else
+			DataPort = DataPort << 1;
+  ca:	88 b3       	in	r24, 0x18	; 24
+  cc:	88 0f       	add	r24, r24
+  ce:	88 bb       	out	0x18, r24	; 24
+  d0:	2f ef       	ldi	r18, 0xFF	; 255
+  d2:	3f ed       	ldi	r19, 0xDF	; 223
+  d4:	80 e1       	ldi	r24, 0x10	; 16
+  d6:	21 50       	subi	r18, 0x01	; 1
+  d8:	30 40       	sbci	r19, 0x00	; 0
+  da:	80 40       	sbci	r24, 0x00	; 0
+  dc:	e1 f7       	brne	.-8      	; 0xd6 <main+0x30>
+  de:	00 c0       	rjmp	.+0      	; 0xe0 <__stack+0x1>
+  e0:	00 00       	nop
+  e2:	ee cf       	rjmp	.-36     	; 0xc0 <main+0x1a>
 
-00000036 <_exit>:
-  36:	f8 94       	cli
+000000e4 <_exit>:
+  e4:	f8 94       	cli
 
-00000038 <__stop_program>:
-  38:	ff cf       	rjmp	.-2      	; 0x38 <__stop_program>
+000000e6 <__stop_program>:
+  e6:	ff cf       	rjmp	.-2      	; 0xe6 <__stop_program>
