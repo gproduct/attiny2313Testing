@@ -37,7 +37,6 @@ SUBDIRS :=
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
-../eeprom.c \
 ../firstTest.c
 
 
@@ -48,19 +47,15 @@ ASM_SRCS +=
 
 
 OBJS +=  \
-eeprom.o \
 firstTest.o
 
 OBJS_AS_ARGS +=  \
-eeprom.o \
 firstTest.o
 
 C_DEPS +=  \
-eeprom.d \
 firstTest.d
 
 C_DEPS_AS_ARGS +=  \
-eeprom.d \
 firstTest.d
 
 OUTPUT_FILE_PATH +=firstTest.elf
@@ -77,8 +72,6 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
-
-
 
 
 

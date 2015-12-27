@@ -6,26 +6,37 @@
  */ 
 
 #define F_CPU	11059200ULL
-#define EPReg 0x0C
 
 #include <avr/io.h>
 #include <util/delay.h>
-#include <avr/interrupt.h>
 
+void setup()
+{
+	
+	DDRB = 0x04;
+	
+	DDRD &= ~(1<<PD4); //Define input on PC3
+	PORTD |= (1<<PD4); // set pull up resistor
+}
 int main(void){
-	unsigned char returned;
-	PORTB = 0x01;
-	EEPROM_write(EPReg, 0x01);
-	returned = EEPROM_read(EPReg);
-	if(returned == 0x01){
-		PORTB = 0x01;
-	}
-	else{
-		PORTB = 0x01;
-	}
+	setup();
+		
+	int counted = 0;
 	while(1)
 	{
-		
-		_delay_ms(1000);
+		if(PIND & (1<<PD4)) {
+			counted++;
+			_delay_ms(400);
+		}
+		if(counted == 5){
+			PORTB = 0x04;
+		}
+		else if(counted == 7){
+			PORTB = 0x04;
+		}
+		else{
+			PORTB = 0x00;
+		}
+		_delay_ms(100);
 	}
 }

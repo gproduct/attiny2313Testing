@@ -96,12 +96,6 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="eeprom.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="eeprom.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="firstTest.c">
       <SubType>compile</SubType>
     </Compile>
