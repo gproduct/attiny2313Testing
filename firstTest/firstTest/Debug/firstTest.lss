@@ -3,152 +3,225 @@ firstTest.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         0000008c  00000000  00000000  00000054  2**1
+  0 .text         00000112  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .comment      00000030  00000000  00000000  000000e0  2**0
+  1 .data         00000002  00800060  00000112  000001a6  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000006  00800062  00800062  000001a8  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000001a8  2**0
                   CONTENTS, READONLY
-  2 .debug_aranges 00000028  00000000  00000000  00000110  2**0
+  4 .debug_aranges 00000028  00000000  00000000  000001d8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  3 .debug_info   00000174  00000000  00000000  00000138  2**0
+  5 .debug_info   00000176  00000000  00000000  00000200  2**0
                   CONTENTS, READONLY, DEBUGGING
-  4 .debug_abbrev 00000106  00000000  00000000  000002ac  2**0
+  6 .debug_abbrev 00000100  00000000  00000000  00000376  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_line   00000154  00000000  00000000  000003b2  2**0
+  7 .debug_line   00000158  00000000  00000000  00000476  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_frame  00000034  00000000  00000000  00000508  2**2
+  8 .debug_frame  00000034  00000000  00000000  000005d0  2**2
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_str    0000018d  00000000  00000000  0000053c  2**0
+  9 .debug_str    00000193  00000000  00000000  00000604  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_loc    0000006b  00000000  00000000  000006c9  2**0
+ 10 .debug_loc    00000048  00000000  00000000  00000797  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_ranges 00000018  00000000  00000000  00000734  2**0
+ 11 .debug_ranges 00000018  00000000  00000000  000007df  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
 
 00000000 <__vectors>:
    0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
-   2:	17 c0       	rjmp	.+46     	; 0x32 <__bad_interrupt>
-   4:	16 c0       	rjmp	.+44     	; 0x32 <__bad_interrupt>
-   6:	15 c0       	rjmp	.+42     	; 0x32 <__bad_interrupt>
-   8:	14 c0       	rjmp	.+40     	; 0x32 <__bad_interrupt>
-   a:	13 c0       	rjmp	.+38     	; 0x32 <__bad_interrupt>
-   c:	12 c0       	rjmp	.+36     	; 0x32 <__bad_interrupt>
-   e:	11 c0       	rjmp	.+34     	; 0x32 <__bad_interrupt>
-  10:	10 c0       	rjmp	.+32     	; 0x32 <__bad_interrupt>
-  12:	0f c0       	rjmp	.+30     	; 0x32 <__bad_interrupt>
-  14:	0e c0       	rjmp	.+28     	; 0x32 <__bad_interrupt>
-  16:	0d c0       	rjmp	.+26     	; 0x32 <__bad_interrupt>
-  18:	0c c0       	rjmp	.+24     	; 0x32 <__bad_interrupt>
-  1a:	0b c0       	rjmp	.+22     	; 0x32 <__bad_interrupt>
-  1c:	0a c0       	rjmp	.+20     	; 0x32 <__bad_interrupt>
-  1e:	09 c0       	rjmp	.+18     	; 0x32 <__bad_interrupt>
-  20:	08 c0       	rjmp	.+16     	; 0x32 <__bad_interrupt>
-  22:	07 c0       	rjmp	.+14     	; 0x32 <__bad_interrupt>
-  24:	06 c0       	rjmp	.+12     	; 0x32 <__bad_interrupt>
+   2:	2a c0       	rjmp	.+84     	; 0x58 <__bad_interrupt>
+   4:	29 c0       	rjmp	.+82     	; 0x58 <__bad_interrupt>
+   6:	28 c0       	rjmp	.+80     	; 0x58 <__bad_interrupt>
+   8:	27 c0       	rjmp	.+78     	; 0x58 <__bad_interrupt>
+   a:	26 c0       	rjmp	.+76     	; 0x58 <__bad_interrupt>
+   c:	25 c0       	rjmp	.+74     	; 0x58 <__bad_interrupt>
+   e:	24 c0       	rjmp	.+72     	; 0x58 <__bad_interrupt>
+  10:	23 c0       	rjmp	.+70     	; 0x58 <__bad_interrupt>
+  12:	22 c0       	rjmp	.+68     	; 0x58 <__bad_interrupt>
+  14:	21 c0       	rjmp	.+66     	; 0x58 <__bad_interrupt>
+  16:	20 c0       	rjmp	.+64     	; 0x58 <__bad_interrupt>
+  18:	1f c0       	rjmp	.+62     	; 0x58 <__bad_interrupt>
+  1a:	1e c0       	rjmp	.+60     	; 0x58 <__bad_interrupt>
+  1c:	1d c0       	rjmp	.+58     	; 0x58 <__bad_interrupt>
+  1e:	1c c0       	rjmp	.+56     	; 0x58 <__bad_interrupt>
+  20:	1b c0       	rjmp	.+54     	; 0x58 <__bad_interrupt>
+  22:	1a c0       	rjmp	.+52     	; 0x58 <__bad_interrupt>
+  24:	19 c0       	rjmp	.+50     	; 0x58 <__bad_interrupt>
 
 00000026 <__ctors_end>:
   26:	11 24       	eor	r1, r1
   28:	1f be       	out	0x3f, r1	; 63
   2a:	cf ed       	ldi	r28, 0xDF	; 223
   2c:	cd bf       	out	0x3d, r28	; 61
-  2e:	07 d0       	rcall	.+14     	; 0x3e <main>
-  30:	2b c0       	rjmp	.+86     	; 0x88 <_exit>
 
-00000032 <__bad_interrupt>:
-  32:	e6 cf       	rjmp	.-52     	; 0x0 <__vectors>
+0000002e <__do_copy_data>:
+  2e:	10 e0       	ldi	r17, 0x00	; 0
+  30:	a0 e6       	ldi	r26, 0x60	; 96
+  32:	b0 e0       	ldi	r27, 0x00	; 0
+  34:	e2 e1       	ldi	r30, 0x12	; 18
+  36:	f1 e0       	ldi	r31, 0x01	; 1
+  38:	02 c0       	rjmp	.+4      	; 0x3e <__SP_L__+0x1>
+  3a:	05 90       	lpm	r0, Z+
+  3c:	0d 92       	st	X+, r0
+  3e:	a2 36       	cpi	r26, 0x62	; 98
+  40:	b1 07       	cpc	r27, r17
+  42:	d9 f7       	brne	.-10     	; 0x3a <__do_copy_data+0xc>
 
-00000034 <setup>:
-#include <util/delay.h>
+00000044 <__do_clear_bss>:
+  44:	20 e0       	ldi	r18, 0x00	; 0
+  46:	a2 e6       	ldi	r26, 0x62	; 98
+  48:	b0 e0       	ldi	r27, 0x00	; 0
+  4a:	01 c0       	rjmp	.+2      	; 0x4e <.do_clear_bss_start>
 
+0000004c <.do_clear_bss_loop>:
+  4c:	1d 92       	st	X+, r1
+
+0000004e <.do_clear_bss_start>:
+  4e:	a8 36       	cpi	r26, 0x68	; 104
+  50:	b2 07       	cpc	r27, r18
+  52:	e1 f7       	brne	.-8      	; 0x4c <.do_clear_bss_loop>
+  54:	07 d0       	rcall	.+14     	; 0x64 <main>
+  56:	5b c0       	rjmp	.+182    	; 0x10e <_exit>
+
+00000058 <__bad_interrupt>:
+  58:	d3 cf       	rjmp	.-90     	; 0x0 <__vectors>
+
+0000005a <setup>:
+int RCL = 0;
+int motor = -1;		
 void setup()
 {
 	
-	DDRB = 0x04;
-  34:	84 e0       	ldi	r24, 0x04	; 4
-  36:	87 bb       	out	0x17, r24	; 23
+	DDRB = 0x03;
+  5a:	83 e0       	ldi	r24, 0x03	; 3
+  5c:	87 bb       	out	0x17, r24	; 23
 	
 	DDRD &= ~(1<<PD4); //Define input on PC3
-  38:	8c 98       	cbi	0x11, 4	; 17
+  5e:	8c 98       	cbi	0x11, 4	; 17
 	PORTD |= (1<<PD4); // set pull up resistor
-  3a:	94 9a       	sbi	0x12, 4	; 18
-  3c:	08 95       	ret
+  60:	94 9a       	sbi	0x12, 4	; 18
+  62:	08 95       	ret
 
-0000003e <main>:
+00000064 <main>:
 }
 int main(void){
 	setup();
-  3e:	fa df       	rcall	.-12     	; 0x34 <setup>
-		
-	int counted = 0;
-  40:	80 e0       	ldi	r24, 0x00	; 0
-  42:	90 e0       	ldi	r25, 0x00	; 0
+  64:	fa df       	rcall	.-12     	; 0x5a <setup>
+			if(PCL > 500)
+			{
+				if(pressed == 0)
+				{
+					motor++;
+					pressed = 1;
+  66:	21 e0       	ldi	r18, 0x01	; 1
+  68:	30 e0       	ldi	r19, 0x00	; 0
+				RCL = 0;
+			}
 		}
-		if(counted == 5){
-			PORTB = 0x04;
-		}
-		else if(counted == 7){
-			PORTB = 0x04;
-  44:	24 e0       	ldi	r18, 0x04	; 4
+				if(motor == 4)
+				{
+					PORTB = 0x01;
+  6a:	41 e0       	ldi	r20, 0x01	; 1
+}
+int main(void){
 	setup();
-		
-	int counted = 0;
 	while(1)
 	{
 		if(PIND & (1<<PD4)) {
-  46:	84 9b       	sbis	0x10, 4	; 16
-  48:	0a c0       	rjmp	.+20     	; 0x5e <__SREG__+0x1f>
-			counted++;
-  4a:	01 96       	adiw	r24, 0x01	; 1
+  6c:	84 9b       	sbis	0x10, 4	; 16
+  6e:	24 c0       	rjmp	.+72     	; 0xb8 <main+0x54>
+			PCL++;
+  70:	80 91 64 00 	lds	r24, 0x0064
+  74:	90 91 65 00 	lds	r25, 0x0065
+  78:	01 96       	adiw	r24, 0x01	; 1
+  7a:	90 93 65 00 	sts	0x0065, r25
+  7e:	80 93 64 00 	sts	0x0064, r24
+			if(PCL > 500)
+  82:	85 3f       	cpi	r24, 0xF5	; 245
+  84:	91 40       	sbci	r25, 0x01	; 1
+  86:	64 f1       	brlt	.+88     	; 0xe0 <__stack+0x1>
+			{
+				if(pressed == 0)
+  88:	80 91 66 00 	lds	r24, 0x0066
+  8c:	90 91 67 00 	lds	r25, 0x0067
+  90:	89 2b       	or	r24, r25
+  92:	69 f4       	brne	.+26     	; 0xae <main+0x4a>
+				{
+					motor++;
+  94:	80 91 60 00 	lds	r24, 0x0060
+  98:	90 91 61 00 	lds	r25, 0x0061
+  9c:	01 96       	adiw	r24, 0x01	; 1
+  9e:	90 93 61 00 	sts	0x0061, r25
+  a2:	80 93 60 00 	sts	0x0060, r24
+					pressed = 1;
+  a6:	30 93 67 00 	sts	0x0067, r19
+  aa:	20 93 66 00 	sts	0x0066, r18
+				}
+				PCL = 0;
+  ae:	10 92 65 00 	sts	0x0065, r1
+  b2:	10 92 64 00 	sts	0x0064, r1
+  b6:	14 c0       	rjmp	.+40     	; 0xe0 <__stack+0x1>
+			}
+		}
+		else{
+			RCL++;
+  b8:	80 91 62 00 	lds	r24, 0x0062
+  bc:	90 91 63 00 	lds	r25, 0x0063
+  c0:	01 96       	adiw	r24, 0x01	; 1
+  c2:	90 93 63 00 	sts	0x0063, r25
+  c6:	80 93 62 00 	sts	0x0062, r24
+			if(RCL > 500)
+  ca:	85 3f       	cpi	r24, 0xF5	; 245
+  cc:	91 40       	sbci	r25, 0x01	; 1
+  ce:	44 f0       	brlt	.+16     	; 0xe0 <__stack+0x1>
+			{
+				pressed = 0;
+  d0:	10 92 67 00 	sts	0x0067, r1
+  d4:	10 92 66 00 	sts	0x0066, r1
+				RCL = 0;
+  d8:	10 92 63 00 	sts	0x0063, r1
+  dc:	10 92 62 00 	sts	0x0062, r1
+			}
+		}
+				if(motor == 4)
+  e0:	80 91 60 00 	lds	r24, 0x0060
+  e4:	90 91 61 00 	lds	r25, 0x0061
+  e8:	04 97       	sbiw	r24, 0x04	; 4
+  ea:	79 f4       	brne	.+30     	; 0x10a <__stack+0x2b>
+				{
+					PORTB = 0x01;
+  ec:	48 bb       	out	0x18, r20	; 24
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
-  4c:	3f ef       	ldi	r19, 0xFF	; 255
-  4e:	4f e7       	ldi	r20, 0x7F	; 127
-  50:	5d e0       	ldi	r21, 0x0D	; 13
-  52:	31 50       	subi	r19, 0x01	; 1
-  54:	40 40       	sbci	r20, 0x00	; 0
-  56:	50 40       	sbci	r21, 0x00	; 0
-  58:	e1 f7       	brne	.-8      	; 0x52 <__SREG__+0x13>
-  5a:	00 c0       	rjmp	.+0      	; 0x5c <__SREG__+0x1d>
-  5c:	00 00       	nop
-			_delay_ms(400);
-		}
-		if(counted == 5){
-  5e:	85 30       	cpi	r24, 0x05	; 5
-  60:	91 05       	cpc	r25, r1
-  62:	11 f4       	brne	.+4      	; 0x68 <__SREG__+0x29>
-			PORTB = 0x04;
-  64:	28 bb       	out	0x18, r18	; 24
-  66:	06 c0       	rjmp	.+12     	; 0x74 <__SREG__+0x35>
-		}
-		else if(counted == 7){
-  68:	87 30       	cpi	r24, 0x07	; 7
-  6a:	91 05       	cpc	r25, r1
-  6c:	11 f4       	brne	.+4      	; 0x72 <__SREG__+0x33>
-			PORTB = 0x04;
-  6e:	28 bb       	out	0x18, r18	; 24
-  70:	01 c0       	rjmp	.+2      	; 0x74 <__SREG__+0x35>
-		}
-		else{
-			PORTB = 0x00;
-  72:	18 ba       	out	0x18, r1	; 24
-  74:	3f ef       	ldi	r19, 0xFF	; 255
-  76:	4f e5       	ldi	r20, 0x5F	; 95
-  78:	53 e0       	ldi	r21, 0x03	; 3
-  7a:	31 50       	subi	r19, 0x01	; 1
-  7c:	40 40       	sbci	r20, 0x00	; 0
-  7e:	50 40       	sbci	r21, 0x00	; 0
-  80:	e1 f7       	brne	.-8      	; 0x7a <__SREG__+0x3b>
-  82:	00 c0       	rjmp	.+0      	; 0x84 <__SREG__+0x45>
-  84:	00 00       	nop
-  86:	df cf       	rjmp	.-66     	; 0x46 <__SREG__+0x7>
+  ee:	8f ef       	ldi	r24, 0xFF	; 255
+  f0:	9f ed       	ldi	r25, 0xDF	; 223
+  f2:	50 e1       	ldi	r21, 0x10	; 16
+  f4:	81 50       	subi	r24, 0x01	; 1
+  f6:	90 40       	sbci	r25, 0x00	; 0
+  f8:	50 40       	sbci	r21, 0x00	; 0
+  fa:	e1 f7       	brne	.-8      	; 0xf4 <__stack+0x15>
+  fc:	00 c0       	rjmp	.+0      	; 0xfe <__stack+0x1f>
+  fe:	00 00       	nop
+					_delay_ms(500);
+					motor = 0;
+ 100:	10 92 61 00 	sts	0x0061, r1
+ 104:	10 92 60 00 	sts	0x0060, r1
+ 108:	b1 cf       	rjmp	.-158    	; 0x6c <main+0x8>
+				}
+				else{
+					PORTB = 0x00;
+ 10a:	18 ba       	out	0x18, r1	; 24
+ 10c:	af cf       	rjmp	.-162    	; 0x6c <main+0x8>
 
-00000088 <_exit>:
-  88:	f8 94       	cli
+0000010e <_exit>:
+ 10e:	f8 94       	cli
 
-0000008a <__stop_program>:
-  8a:	ff cf       	rjmp	.-2      	; 0x8a <__stop_program>
+00000110 <__stop_program>:
+ 110:	ff cf       	rjmp	.-2      	; 0x110 <__stop_program>

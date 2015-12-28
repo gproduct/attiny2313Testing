@@ -10,26 +10,20 @@
 #include <avr/interrupt.h>
 
 	
-		
+int pressed = 0;
+int PCL = 0;
+int RCL = 0;
+int motor = -1;		
 void setup()
 {
 	
-	DDRB = 0x01;
+	DDRB = 0x03;
 	
 	DDRD &= ~(1<<PD4); //Define input on PC3
 	PORTD |= (1<<PD4); // set pull up resistor
-	
-	GIMSK= 1 << INT1;						//turning on the interupt (GIMSK register)
-	MCUCR = 1 << ISC01 | 1 << ISC00;		//rising edge
-	
-	sei();
 }
 int main(void){
 	setup();
-	int pressed = 0;
-	int PCL = 0;
-	int RCL = 0;
-	
 	while(1)
 	{
 		if(PIND & (1<<PD4)) {
@@ -38,7 +32,7 @@ int main(void){
 			{
 				if(pressed == 0)
 				{
-					PORTB = 0x01;
+					motor++;
 					pressed = 1;
 				}
 				PCL = 0;
@@ -49,9 +43,18 @@ int main(void){
 			if(RCL > 500)
 			{
 				pressed = 0;
-				PORTB = 0x00;
 				RCL = 0;
 			}
 		}
+				if(motor == 4)
+				{
+					PORTB = 0x01;
+					_delay_ms(500);
+					motor = 0;
+				}
+				else{
+					PORTB = 0x00;
+				}
+		
 	}
 }
