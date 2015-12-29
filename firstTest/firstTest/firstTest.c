@@ -13,6 +13,7 @@
 int pressed = 0;
 int PCL = 0;
 int RCL = 0;
+
 int motor = -1;		
 void setup()
 {
@@ -46,15 +47,15 @@ int main(void){
 				RCL = 0;
 			}
 		}
-				if(motor == 4)
-				{
-					PORTB = 0x01;
-					_delay_ms(500);
-					motor = 0;
-				}
-				else{
-					PORTB = 0x00;
-				}
+		if(motor == 4)
+		{
+			PORTB = 0x01;
+			_delay_ms(500);
+			motor = 0;
+		}
+		else{
+			PORTB = 0x00;
+		}
 		
 	}
 }
