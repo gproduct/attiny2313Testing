@@ -1,17 +1,20 @@
 /*
  * pwm.c
  *
- * Created: 12/27/2015 11:50:02 PM
+ * Created: 12/29/2015 10:35:44 AM
  *  Author: Sili
- */
- #define F_CPU	11059200ULL
- 
- #include <avr/io.h>
- #include <util/delay.h>
- #include "pwm.h"
+ */ 
+#define F_CPU	11059200ULL
+#define DEBOUNCE 10
+
+#include <avr/io.h>
+#include <util/delay.h>
+#include <avr/interrupt.h>
+#include "pwm.h"
+
 void servo_init(unsigned int f_pwm)
 {
-	DDRB |= (1 << PINB2) | (1 << PINB3);
+	DDRB |= (1 << PINB2) | (1 << PINB3) | (1 << PINB4);
 	
 	TCNT1 = 0;
 	OCR1A = 0;
@@ -38,8 +41,8 @@ void servo_position2(unsigned char dutyCycle)
 {
 	/*if((dutyCycle < 110) || (dutyCycle >220))
 	{
-		dutyCycle s= 160;
+		dutyCycle = 160;
 	}*/
-		OCR0A = ((double)ICR1 / 255) * dutyCycle + 0.5;
+		OCR1B = ((double)ICR1 / 255) * dutyCycle + 0.5;
 	
 }//END OF servo_position

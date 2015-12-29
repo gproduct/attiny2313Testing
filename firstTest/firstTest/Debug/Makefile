@@ -37,7 +37,8 @@ SUBDIRS :=
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
-../firstTest.c
+../firstTest.c \
+../pwm.c
 
 
 PREPROCESSING_SRCS += 
@@ -47,16 +48,20 @@ ASM_SRCS +=
 
 
 OBJS +=  \
-firstTest.o
+firstTest.o \
+pwm.o
 
 OBJS_AS_ARGS +=  \
-firstTest.o
+firstTest.o \
+pwm.o
 
 C_DEPS +=  \
-firstTest.d
+firstTest.d \
+pwm.d
 
 C_DEPS_AS_ARGS +=  \
-firstTest.d
+firstTest.d \
+pwm.d
 
 OUTPUT_FILE_PATH +=firstTest.elf
 
@@ -72,6 +77,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 
